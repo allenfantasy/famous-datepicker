@@ -1,0 +1,29 @@
+{
+  "name": "famous-datepicker",
+  "version": "0.0.1",
+  "description": "Datepicker for Famo.us",
+  "main": "Datepicker.js",
+  "readmeFilename": "Readme.md",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allenfantasy/famous-datepicker"
+  },
+  "keywords": [
+    "famo.us",
+    "datepicker"
+  ],
+  "author": "Allen Wu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allenfantasy/famous-datepicker/issues"
+  },
+  "homepage": "https://github.com/allenfantasy/famous-datepicker",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-push-release": "^0.1.1",
+    "matchdep": "^0.3.0"
+  }
+}

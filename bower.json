@@ -1,0 +1,23 @@
+{
+  "name": "famous-datepicker",
+  "version": "0.0.1",
+  "authors": [
+    "Allen Wu <allenwu1018@gmail.com>"
+  ],
+  "description": "Datepicker for Famo.us",
+  "keywords": [
+    "famo.us",
+    "famous",
+    "datepicker",
+    "befamous"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/allenfantasy/famous-datepicker",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
