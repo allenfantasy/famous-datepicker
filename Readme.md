@@ -11,6 +11,13 @@ Install it via bower: `bower install famous-datepicker`
 
 ### Usage
 
+add the following in index.html:
+
+```html
+<link rel="stylesheet" type="text/css" href="lib/famous-datepicker/datepicker.css" />
+```
+
+add use Datepicker like this:
 ```javascript
 var Datepicker = require('famous-datepicker/Datepicker');
 
@@ -21,6 +28,8 @@ var datepicker = new Datepicker({
   fontSize: 20, // fontSize
 }) 
 ```
+
+And here comes the [example demo](https://github.com/allenfantasy/famous-datepicker-example)
 
 ## Dependencies
 
