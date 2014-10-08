@@ -117,6 +117,7 @@ define(function(require, exports, module) {
     this._innerItems = selections.map(function(selection) {
       return _selectionItem(selection, this.width, this.itemHeight, this.scroll);
     }, this);
+    this.scroll.sequenceFrom(this._innerItems);
   };
 
   /**

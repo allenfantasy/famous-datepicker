@@ -103,7 +103,7 @@ define(function(require, exports, module) {
   };
 
   Datepicker.prototype.setYears = function(startYear, endYear) {
-    var years = _getYDMItems(startYear, endYear, this,gap);
+    var years = _getYDMItems(startYear, endYear, this.gap);
     this._model.set('year', years[this.gap]);
     this._slots['year'].sequenceFrom(years);
   };
