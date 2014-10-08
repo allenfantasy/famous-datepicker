@@ -113,6 +113,12 @@ define(function(require, exports, module) {
     return this._innerItems.length - this.gap * 2;
   };
 
+  Slot.prototype.sequenceFrom = function(selections) {
+    this._innerItems = selections.map(function(selection) {
+      return _selectionItem(selection, this.width, this.itemHeight, this.scroll);
+    }, this);
+  };
+
   /**
    * @private
    * @param {String} content

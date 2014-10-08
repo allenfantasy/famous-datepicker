@@ -8,11 +8,20 @@ define(function(require, exports, module) {
   var Model = require('./helpers/NaiveModel');
 
   // TODO: options manager for Datepicker & Slot
+  // TODO: initial active date
   // TODO: doc
   /**
    * @class Datepicker
    * @constructor
    *
+   * @param {Object} options options for datepicker
+   * @param {Array} options.size size
+   * @param {Object} options.scroll options for each slot
+   * @param {Number} options.range number of displayed item in each slot
+   * @param {Number} options.fontSize fontSize of slot
+   * @param {Object} options.year year range
+   * @param {Number} options.year.start start year
+   * @param {Number} options.year.end end year
    */
   function Datepicker(options) {
     View.apply(this, arguments);
@@ -22,6 +31,7 @@ define(function(require, exports, module) {
     //TODO: deal with 'undefined'
     this.width = (options.size && options.size.length) ? options.size[0] : 200;
     this.height = (options.size && options.size.length) ? options.size[1] : 300;
+    // TODO: custom scroll options
     this.scroll = options.scroll ? options.scroll : { direction: 1 };
     this.range = options.range ? options.range : 5;
     this.fontSize = options.fontSize ? options.fontSize : 16;
@@ -90,6 +100,12 @@ define(function(require, exports, module) {
     this._model.set('month', this._slots.month.getValue());
     this._model.set('day', this._slots.day.getValue());
     return this._model.get('year') + '-' + this._model.get('month') + '-' + this._model.get('day');
+  };
+
+  Datepicker.prototype.setYears = function(startYear, endYear) {
+    var years = _getYDMItems(startYear, endYear, this,gap);
+    this._model.set('year', years[this.gap]);
+    this._slots['year'].sequenceFrom(years);
   };
 
   function _setupEvent() {
