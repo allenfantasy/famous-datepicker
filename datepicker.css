@@ -1,6 +1,6 @@
 .dp-mask {
   border-width: 16px;
-  -webkit-border-image: url(images/background.png) 16 16 stretch;
+  -webkit-border-image: url(images/background.png) 16 16 fill stretch;
   z-index: -100;
 }
 .dp-bar {
