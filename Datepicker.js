@@ -99,7 +99,8 @@ define(function(require, exports, module) {
     this._model.set('year', this._slots.year.getValue());
     this._model.set('month', this._slots.month.getValue());
     this._model.set('day', this._slots.day.getValue());
-    return this._model.get('year') + '-' + this._model.get('month') + '-' + this._model.get('day');
+    var dateStr = this._model.get('year') + '-' + this._model.get('month') + '-' + this._model.get('day');
+    return new Date(dateStr);
   };
 
   Datepicker.prototype.setYears = function(startYear, endYear) {
