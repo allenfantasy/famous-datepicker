@@ -1,30 +1,22 @@
-'use strict';
+/*global module:false*/
 
-module.exports = function (grunt) {
-  // load all grunt tasks
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+/*Generated initially from grunt-init, heavily inspired by yo webapp*/
 
-  grunt.initConfig({
-    bump: {
-      options: {
-        files: ['package.json'],
-        updateConfigs: [],
-        add: true,
-        addFiles: ['.'], // '.' for all files except ingored files in .gitignore
-        commit: true,
-        commitMessage: 'Release v%VERSION%',
-        commitFiles: ['-a'], // '-a' for all files
-        createTag: true,
-        tagName: 'v%VERSION%',
-        tagMessage: 'Version %VERSION%',
-        push: true,
-        pushTo: 'origin',
-        npm: false,
-        npmTag: 'Release v%VERSION%',
-        gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
+module.exports = function(grunt) {
+  'use strict';
+
+  // Time how long tasks take. Can help when optimizing build times
+  require('time-grunt')(grunt);
+
+  // Load grunt config
+  require('load-grunt-config')(grunt, {
+    init: true,
+    data: {
+      config: {
+        // Configurable paths
+        app: '.',
+        dist: 'dist'
       }
     }
   });
-
-  grunt.loadNpmTasks('grunt-push-release');
 };
