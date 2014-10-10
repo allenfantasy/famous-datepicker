@@ -52,7 +52,8 @@ define(function(require, exports, module) {
   datepickerView.on('confirm', function(date) {
     // set date
     state.set(0, { duration: 1000, curve: 'easeOut' });
-    appView.input.setContent(date);
+    var dateStr = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
+    appView.input.setContent(dateStr);
   });
 
   datepickerView.on('cancel', function() {
