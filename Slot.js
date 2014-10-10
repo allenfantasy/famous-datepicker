@@ -1,9 +1,8 @@
 define(function(require, exports, module) {
   var Surface = require('famous/core/Surface');
   var ContainerSurface = require('famous/surfaces/ContainerSurface');
-  var Timer = require('famous/utilities/Timer');
+  var Scrollview = require('famous/views/Scrollview');
   var Model = require('./helpers/NaiveModel');
-  var Scrollview = require('./helpers/MyScrollview');
 
   function Slot(selections, width, height, range) {
     var container = new ContainerSurface({
@@ -43,11 +42,28 @@ define(function(require, exports, module) {
     this.scroll.sequenceFrom(this._innerItems);
     this.container.add(this.scroll);
 
-    this.scroll.on('pageChange', function() {
-      Timer.after(function() {
-        this.updateValue();
-      }.bind(this), 30);
+    this.scroll.on('settle', function() {
+      this.updateValue();
     }.bind(this));
+
+    //singleton
+    this.scroll.getActiveContent = function(offset) {
+      var index = this.getCurrentIndex();
+      var items = this._node._.array;
+      offset = offset || 0;
+      if (index > items.length - offset*2 - 1) {
+        index = items.length - offset*2 - 1;
+      }
+      else if (index < 0) {
+        index = 0;
+      }
+
+      var item = items[index + offset];
+      var content = item.getContent();
+      if (content instanceof DocumentFragment)
+        content = item._element.innerHTML;
+      return content;
+    }
 
     return this;
   }
