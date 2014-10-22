@@ -29,7 +29,11 @@ var datepicker = new Datepicker({
 }) 
 ```
 
-And here comes the [example demo](https://github.com/allenfantasy/famous-datepicker-example)
+### Example & Develop
+
+run `grunt serve` to check the example.
+
+Develop to see the difference in example.
 
 ## Dependencies
 
