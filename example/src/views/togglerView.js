@@ -4,7 +4,6 @@ define(function(require, exports, module) {
   var Modifier = require('famous/core/Modifier');
   var Transform = require('famous/core/Transform');
   var View = require('famous/core/View');
-  var GridLayout = require('famous/views/GridLayout');
   var InputSurface = require('famous/surfaces/InputSurface');
   var ContainerSurface = require('famous/surfaces/ContainerSurface');
 

@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 
     var inputWrapper = new ContainerSurface({
       size: [window.innerWidth - 20, 50]
-    }); 
+    });
     var inputLayout = new SequentialLayout({ direction: 0 });
 
     var label = new Surface({

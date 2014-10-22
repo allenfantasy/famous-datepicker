@@ -52,7 +52,12 @@ define(function(require, exports, module) {
   datepickerView.on('confirm', function(date) {
     // set date
     state.set(0, { duration: 1000, curve: 'easeOut' });
-    appView.input.setContent(date);
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    month = month<10?'0'+month:month;
+    day = day<10?'0'+day:day;
+    var dateStr = date.getFullYear() + '-' + month + '-' + day;
+    appView.input.setContent(dateStr);
   });
 
   datepickerView.on('cancel', function() {
