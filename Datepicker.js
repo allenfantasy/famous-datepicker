@@ -99,13 +99,21 @@ define(function(require, exports, module) {
     this._model.set('year', this._slots.year.getValue());
     this._model.set('month', this._slots.month.getValue());
     this._model.set('day', this._slots.day.getValue());
-    var month = this._model.get('month');
-    var day = this._model.get('day');
-    var m = month >= 10 ? month : "0" + month;
-    var d = d >= 10 ? day : "0" + day;
-    var dateStr = this._model.get('year')  + '-' + m + '-' + d;
+    var month = this.getRegularMonth();
+    var day = this.getRegularDay();
+    var dateStr = this._model.get('year')  + '-' + month + '-' + day;
     return (new Date(dateStr));
   };
+
+  Datepicker.prototype.getRegularMonth = function() {
+    var month = this._model.get('month');
+    return (month >= 10 ? month : "0" + month);
+  };
+
+  Datepicker.prototype.getRegularDay = function () {
+    var day = this._model.get('day');
+    return (day >= 10 ? day : "0" + day);
+  }
 
   Datepicker.prototype.setYears = function(startYear, endYear) {
     var years = _getYDMItems(startYear, endYear, this.gap);
