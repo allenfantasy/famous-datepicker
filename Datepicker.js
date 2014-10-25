@@ -106,12 +106,12 @@ define(function(require, exports, module) {
   };
 
   Datepicker.prototype.getRegularMonth = function() {
-    var month = this._model.get('month');
+    var month = this._slots.month.getValue();
     return (month >= 10 ? month : "0" + month);
   };
 
   Datepicker.prototype.getRegularDay = function () {
-    var day = this._model.get('day');
+    var day = this._slots.day.getValue();
     return (day >= 10 ? day : "0" + day);
   }
 
@@ -155,9 +155,9 @@ define(function(require, exports, module) {
    */
   Datepicker.prototype._getDays = function _getDays() {
     var year = this._slots.year.getValue();
-    var month = this._slots.month.getValue();
+    // var month = this._slots.month.getValue();
 
-    var d = new Date([month<10?'0'+month:month, '01', year].join('/'));
+    var d = new Date([this.getRegularMonth(), '01', year].join('/'));
     if (d.getMonth()>10) d.setFullYear(d.getFullYear()+1);
     d.setMonth((d.getMonth()+1)%12); // next month
     d.setDate(0); // back one day
