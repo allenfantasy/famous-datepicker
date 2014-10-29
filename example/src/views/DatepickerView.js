@@ -22,11 +22,21 @@ define(function(require, exports, module) {
       range: 3,
       fontSize: 20
     });
+    this.mask = new Surface({
+      size: [undefined, window.innerHeight / 2],
+      properties: {
+        backgroundColor: 'rgba(0,0,0,0.8)'
+      }
+    });
 
     window.datePicker = this.datePicker;
 
     var bar = _createBar.call(this);
 
+    this.container.add(new Modifier({
+      origin: [0.5, 0],
+      align: [0.5, 0]
+    })).add(this.mask);
     this.container.add(new Modifier({
       origin: [0.5, 1],
       align: [0.5, 1]
@@ -95,6 +105,9 @@ define(function(require, exports, module) {
     })).add(this.confirmButton);
 
     this.cancelButton.on('click', function() {
+      this.emit('cancel');
+    }.bind(this));
+    this.mask.on('click', function() {
       this.emit('cancel');
     }.bind(this));
     this.confirmButton.on('click', function() {

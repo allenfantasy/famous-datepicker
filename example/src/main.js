@@ -22,26 +22,20 @@ define(function(require, exports, module) {
   // datepicker mask
   mainContext.add(new Modifier({
     transform: function() {
-      return Transform.translate((1 - state.get())*window.innerWidth, 0, 0);
+      return Transform.translate(0, (1 - state.get())*window.innerHeight, 10);
     }
   })).add(datepickerView);
 
   // appView
   mainContext.add(new Modifier({
     origin: [0.5, 0.5],
-    align: [0.5, 0.5],
-    transform: function() {
-      return Transform.translate(-state.get()*window.innerWidth, 0, 0);
-    }
+    align: [0.5, 0.5]
   })).add(appView);
 
   // toggler
   mainContext.add(new Modifier({
     origin: [0.5, 0],
-    align: [0.5, 0],
-    transform: function() {
-      return Transform.translate(-state.get()*window.innerWidth, 10, 0);
-    }
+    align: [0.5, 0]
   })).add(toggler);
 
   // events
