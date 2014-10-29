@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+Define(function(require, exports, module) {
     var PhysicsEngine = require('famous/physics/PhysicsEngine');
     var Particle = require('famous/physics/bodies/Particle');
     var Drag = require('famous/physics/forces/Drag');
@@ -494,31 +494,35 @@ define(function(require, exports, module) {
       // pivot is a 'fake' active item which is always in the scope of `margin`
       var pivot = renderables[this._node.index];
       var itemHeight = pivot.getSize()[direction];
-      var matrics = pivot._currTarget.parentNode.style['-webkit-transform'].split(',');
-      var parentOffset = parseInt(matrics[matrics.length - (direction === 0 ? 4 : 3)].trim());
-      var pivotOffset = pivot._matrix[direction===0?12:13];
-      var pIndex = this._node.index;
+      if (pivot._currTarget) {
+        var matrics = pivot._currTarget.parentNode.style['-webkit-transform'].split(',');
+        var parentOffset = parseInt(matrics[matrics.length - (direction === 0 ? 4 : 3)].trim());
+        var pivotOffset = pivot._matrix[direction===0?12:13];
+        var pIndex = this._node.index;
 
-      var offsets = renderables.map(function(r, index, array) {
-        return pivotOffset + (index - pIndex) * itemHeight;
-        //return r._matrix[direction === 0 ? 12 : 13];
-      });
+        var offsets = renderables.map(function(r, index, array) {
+          return pivotOffset + (index - pIndex) * itemHeight;
+          //return r._matrix[direction === 0 ? 12 : 13];
+        });
 
-      // the active index's offset should be 0
-      var index;
-      var minOffset = Infinity;
-      for (var i = 0; i < offsets.length; i++)
-        if (Math.abs(offsets[i]) < minOffset) {
-          minOffset = Math.abs(offsets[i]);
-          index = i;
+        // the active index's offset should be 0
+        var index;
+        var minOffset = Infinity;
+        for (var i = 0; i < offsets.length; i++)
+          if (Math.abs(offsets[i]) < minOffset) {
+            minOffset = Math.abs(offsets[i]);
+            index = i;
+          }
+
+        // overcome some bug in Famo.us Scrollview: parentOffset
+        if (Math.abs(parentOffset) > 1/2 * itemHeight) {
+          index += 1;
         }
-
-      // overcome some bug in Famo.us Scrollview: parentOffset
-      if (Math.abs(parentOffset) > 1/2 * itemHeight) {
-        index += 1;
+        return index;
       }
-      return index;
-      //return this._node.index;
+      else {
+        return this._node.index;
+      }
     };
 
     MyScrollview.prototype.getActiveContent = function(offset) {
