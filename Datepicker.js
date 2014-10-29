@@ -8,8 +8,6 @@ define(function(require, exports, module) {
   var Model = require('./helpers/NaiveModel');
 
   // TODO: options manager for Datepicker & Slot
-  // TODO: initial active date
-  // TODO: doc
   /**
    * @class Datepicker
    * @constructor
@@ -28,10 +26,9 @@ define(function(require, exports, module) {
 
     this.options = {};
 
-    //TODO: deal with 'undefined'
     this.width = (options.size && options.size.length) ? options.size[0] : 200;
     this.height = (options.size && options.size.length) ? options.size[1] : 300;
-    // TODO: custom scroll options
+    // TODO: customize scroll options
     this.scroll = options.scroll ? options.scroll : { direction: 1 };
     this.range = options.range ? options.range : 5;
     this.fontSize = options.fontSize ? options.fontSize : 16;
@@ -95,6 +92,12 @@ define(function(require, exports, module) {
   Datepicker.prototype = Object.create(View.prototype);
   Datepicker.prototype.constructor = Datepicker;
 
+  /**
+   * Get the date from Datepicker
+   *
+   * @method
+   * @return {Date} datepicker's current date
+   */
   Datepicker.prototype.getDate = function() {
     this._model.set('year', this._slots.year.getValue());
     this._model.set('month', this._slots.month.getValue());
@@ -105,21 +108,97 @@ define(function(require, exports, module) {
     return (new Date(dateStr));
   };
 
+  /**
+   * Get the regular format of month value
+   *
+   * @method
+   * @return {String} regular formatted month string
+   */
   Datepicker.prototype.getRegularMonth = function() {
     var month = this._slots.month.getValue();
     return (month >= 10 ? month : "0" + month);
   };
 
+  /**
+   * Get the regular format of day value
+   *
+   * @method
+   * @return {String} regular formatted day string
+   */
   Datepicker.prototype.getRegularDay = function () {
     var day = this._slots.day.getValue();
     return (day >= 10 ? day : "0" + day);
   }
 
+  /**
+   * Set the startYear and endYear of YEAR slot
+   *
+   * @method
+   */
   Datepicker.prototype.setYears = function(startYear, endYear) {
     var years = _getYDMItems(startYear, endYear, this.gap);
     this._model.set('year', years[this.gap]);
     this._slots['year'].sequenceFrom(years);
   };
+
+  /**
+   * Set datepicker current status to date
+   *
+   * @method
+   */
+  Datepicker.prototype.setCurrent = function(date) {
+    var dateObj = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate()
+    };
+    ['year', 'month', 'day'].forEach(function(key) {
+      _setCurrentItem(this._slots[key], dateObj[key], this.gap);
+    }, this);
+  };
+
+  /**
+   * Get the number of days based on current year & month
+   *
+   * Get the last day of this month, and extract the `day` part
+   *
+   * @private
+   * @return {Number} the number of days
+   *
+   */
+  Datepicker.prototype._getDays = function _getDays() {
+    var year = this._slots.year.getValue();
+
+    var d = new Date([this.getRegularMonth(), '01', year].join('/'));
+    if (d.getMonth()>10) d.setFullYear(d.getFullYear()+1);
+    d.setMonth((d.getMonth()+1)%12); // next month
+    d.setDate(0); // back one day
+    return parseInt(d.getDate());
+  };
+
+  function _setCurrentItem(slot, item, gap) {
+    var items = slot._innerItems.map(function(item) {
+      return item.getContent();
+    });
+    var index = items.indexOf(item);
+    if (index > -1) {
+      var i = gap;
+      var currIdx = slot.scroll.getActiveIndex() + gap;
+      // TODO: some bugs still
+      if (currIdx < index) {
+        while (currIdx < index) {
+          slot.scroll.goToNextPage();
+          currIdx++;
+        }
+      }
+      else if (currIdx > index) {
+        while (currIdx > index) {
+          slot.scroll.goToPreviousPage();
+          currIdx--;
+        }
+      }
+    }
+  }
 
   function _setupEvent() {
     // setup events
@@ -142,26 +221,6 @@ define(function(require, exports, module) {
         }
       }, this);
     }, this);
-  };
-
-  /**
-   * Get the number of days based on current year & month
-   *
-   * Get the last day of this month, and extract the `day` part
-   *
-   * @private
-   * @return {Number} the number of days
-   *
-   */
-  Datepicker.prototype._getDays = function _getDays() {
-    var year = this._slots.year.getValue();
-    // var month = this._slots.month.getValue();
-
-    var d = new Date([this.getRegularMonth(), '01', year].join('/'));
-    if (d.getMonth()>10) d.setFullYear(d.getFullYear()+1);
-    d.setMonth((d.getMonth()+1)%12); // next month
-    d.setDate(0); // back one day
-    return parseInt(d.getDate());
   };
 
   function _getDefaultYearRange(range) {
