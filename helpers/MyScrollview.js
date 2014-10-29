@@ -1,4 +1,4 @@
-Define(function(require, exports, module) {
+define(function(require, exports, module) {
     var PhysicsEngine = require('famous/physics/PhysicsEngine');
     var Particle = require('famous/physics/bodies/Particle');
     var Drag = require('famous/physics/forces/Drag');
